@@ -54,6 +54,12 @@ After installation, the backend must be available in the system `PATH` under the
 sniptex --help
 ~~~
 
+## Compilation
+
+```sh
+lualatex --shell-escape docs/main.tex
+```
+
 ## Usage
 
 SnipTeX defines the command `\IncludeCode`, which is used as follows:
@@ -155,12 +161,6 @@ For local files, the backend uses Python's `pathlib` module. For tag matching, i
 - SnipTeX depends on `minted`.
 - Remote source files must be accessible over HTTP or HTTPS.
 - Remote source files must be plain text files.
-
-## Compilation
-
-```sh
-lualatex --shell-escape docs/main.tex
-```
 
 ## Security note
 
