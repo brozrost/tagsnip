@@ -171,3 +171,8 @@ For local files, the backend uses Python's `pathlib` module. For tag matching, i
 SnipTeX requires shell escape because it calls an external Python backend during compilation and removes temporary files (lines 80, 93, and 94 in `sniptex.sty`).
 
 Only compile trusted documents with shell escape enabled.
+
+---
+Copyright (c) 2026 Rostislav Brož.
+
+> SnipTeX is distributed under the MIT License. The full license text is included in the repository in the [`LICENSE`](https://github.com/brozrost/sniptex/blob/main/LICENSE.md) file.
