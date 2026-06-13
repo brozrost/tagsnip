@@ -62,6 +62,8 @@ lualatex --shell-escape docs/main.tex
 
 ## Usage
 
+**Example document:** <a href="">main.pdf</a>
+
 SnipTeX defines the command `\IncludeCode`, which is used as follows:
 
 ```tex
