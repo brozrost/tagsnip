@@ -13,10 +13,10 @@ pip install sniptex
 % bez nich se citace v dokumentu nejspíš nebudou ukazovat správně.
 
 \iffalse
-lualatex --shell-escape docs/main.tex
+lualatex --shell-escape docs/docs-czech.tex
 bibtex main
-lualatex --shell-escape docs/main.tex
-lualatex --shell-escape docs/main.tex
+lualatex --shell-escape docs/docs-czech.tex
+lualatex --shell-escape docs/docs-czech.tex
 \fi
 
 \documentclass{article}
@@ -25,6 +25,11 @@ lualatex --shell-escape docs/main.tex
 \usepackage[czech]{babel}
 \usepackage{natbib}
 \usepackage[hidelinks]{hyperref}
+\usepackage{fontspec}
+
+\setmainfont{Latin Modern Roman}
+\setsansfont{Latin Modern Sans}
+\setmonofont{Latin Modern Mono}
 
 \usepackage{sniptex}
 
