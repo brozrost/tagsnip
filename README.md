@@ -117,8 +117,10 @@ Suppose the local file `docs/example.py` contains a function `main()` marked wit
 ```tex
 \IncludeCode{example.py}{tag1}{Python}{Úryvek 2: ...}
 ```
+<div align="center">
+  <img width="835" height="265" alt="# sniptex-start tagt" src="https://github.com/user-attachments/assets/4ca1bd1a-abe8-4478-963d-15c42fbe9479" />
+</div>
 
-SHOWCASE
 
 ## Remote snippet
 
@@ -126,9 +128,13 @@ SnipTeX can also include snippets from source files available through web URLs.
 
 For example, a snippet marked with the tag `tag2` in a remote Python file can be included as follows:
 
-~~~tex
+```tex
 \IncludeCode[firstnumber=1]{https://raw.githubusercontent.com/brozrost/sniptex/main/docs/example2.py}{tag2}{Python}{Code snippet from a remote file.}
-~~~
+```
+
+<div align="center">
+<img width="833" height="324" alt="Pasted Graphic 1 2" src="https://github.com/user-attachments/assets/02dfe4b5-0340-42b1-bb25-63cc0b331827" />
+</div>
 
 The remote file must be accessible over HTTP or HTTPS and must be readable as a plain text source file.
 
