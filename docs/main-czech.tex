@@ -1,0 +1,171 @@
+% SnipTeX ukázkový dokument
+% Autor: Rostislav Brož
+% Semestrální práce, 2026
+
+% SnipTeX potřebuje Python backend pro to, aby fungoval.
+% Před kompilací dokumentu je potřeba ho nainstalovat:
+
+\iffalse
+pip install sniptex
+\fi
+
+% Pro kompilaci bude potřeba spustit nasledující sérii příkazů,
+% bez nich se citace v dokumentu nejspíš nebudou ukazovat správně.
+
+\iffalse
+lualatex --shell-escape docs/main.tex
+bibtex main
+lualatex --shell-escape docs/main.tex
+lualatex --shell-escape docs/main.tex
+\fi
+
+\documentclass{article}
+
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage[czech]{babel}
+\usepackage{natbib}
+\usepackage[hidelinks]{hyperref}
+
+\usepackage{sniptex}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+
+    {\Large České vysoké učení technické v Praze\par}
+    {\Large Fakulta informačních technologií\par}
+
+    \vspace{3cm}
+
+    {\Huge\bfseries Snip\TeX\par}
+
+    \vspace{0.5cm}
+
+    {\Large Semestrální práce - Typografie a \TeX\par}
+
+    \vfill
+
+    \begin{tabular}{rl}
+        Autor: & Rostislav Brož \\
+        Rok: & 2026 \\
+    \end{tabular}
+
+    \vspace{2cm}
+\end{titlepage}
+
+\section*{Snip\TeX}
+
+Snip\TeX{} je La\TeX{}ový balíček pro vkládání označených úryvků kódu z lokálních souborů 
+nebo vzdálených repozitářů dostupných přes webové odkazy. 
+Extrahuje označené části kódu a sází je jednotným stylem, 
+čímž podporuje reprodukovatelnou a udržitelnou dokumentaci.
+
+\subsection*{Instalace}
+
+Snip\TeX{} pro parsování zdrojových souborů používá stejnojmenný Python balíček,
+který je publikovaný v softwarovém repozitáři PyPI \citep{pypi}. 
+Aby Snip\TeX{} fungoval, je potřeba backend nainstalovat následujícím příkazem.
+
+\IncludeCode[firstnumber=1]{docs/example2.py}{comm0}{cpp}{}
+
+\subsection*{Použití}
+
+Snip\TeX{} definuje příkaz \textbackslash{}IncludeCode, který se používá následovně:
+
+\IncludeCode[firstnumber=1]{docs/example2.py}{comm1}{cpp}{}
+
+Nepovinný argument \textit{options} umožňuje uživateli přepsat nastavení formátování kódu. 
+V příkazu níže byly použity přepínače \textit{firstnumber}, \textit{fontsize} a \textit{style},
+které nastaví číslování řádků od čísla 1, velikost fontu na \nobreak\textit{\textbackslash{}scriptsize}
+a styl zvýrazňování kódu na \textit{monokai}. 
+Přepínače musí existovat v balíčku Minted \citep{minted} a být oddělené čárkou. Je také důležité zmínit, že bez úpravy
+přepínače \textit{firstnumber} Snip\TeX{} čísluje řádky tak, jak jsou číslované ve~zdrojovém souboru.
+
+\IncludeCode[firstnumber=1]{docs/example2.py}{comm2}{cpp}{}
+
+Povinný argument \textit{source} definuje zdroj, odkud se má
+úrvek kódu převzít. Argument může být ve formě cesty k lokálnímu souboru, nebo odkazu na webovou stránku.
+Snip\TeX{} dokáže tyto možnosti sám rozlišit. Povinný argument \textit{tag} specifikuje 
+unikátní klíčové slovo, které označuje jeden úryvek kódu. Tag musí být oddělený přesně jednou mezerou a 
+následovat za frázemi \textit{sniptex-start} a \textit{sniptex-end}, 
+které úryvek vymezují (viz Úryvek~1).
+
+\IncludeCode{docs/example.py}{demo}{Python}{Úryvek 1: Ukázka používání tagů.}
+
+Povinným argumentem \textit{language} uživatel zvolí programovací jazyk, v jehož stylu má 
+být kód v úryvku zvýrazněn. Posledním argumentem je popisek, který může být prázdný. 
+Nicméně složené závorky je potřeba psát i pro prázdný popisek.
+
+\subsubsection*{Lokální úryvek}
+
+Pro ukázku toho, jak příkaz \textbackslash{}IncludeCode funguje pro lokální soubory využijeme
+soubor \textit{example.py} s Úryvkem~1. V něm je funkce \textit{main()} obalená tagem \textit{tag1}. 
+Příkaz pro zobrazení kódu funkce v dokumentu by tedy vypadal takto:
+
+\IncludeCode[firstnumber=1]{docs/example2.py}{comm3}{cpp}{}
+
+Tento příkaz se přeloží na Úryvek 2:
+
+\IncludeCode{docs/example.py}{tag1}{Python}{Úryvek 2: Úryvek vymezený tagem \textit{tag1} z Úryvku 1.}
+
+\newpage
+
+\subsubsection*{Úryvek z webové stránky}
+
+Součástí domovského repozitáře Snip\TeX{}u na GitHubu je i soubor \textit{example2.py}, 
+ve kterém se nachází funkce pro extrakci úryvku. Část této funkce je ohraničená tagem \textit{tag2}, 
+tu zobrazíme následujícím příkazem:
+
+\IncludeCode[firstnumber=1]{docs/example2.py}{comm4}{cpp}{}
+
+Výsledkem tohoto příkazu je Úryvek 3:
+
+\IncludeCode[]{https://raw.githubusercontent.com/brozrost/sniptex/main/docs/example2.py}{tag2}{Python}{Úryvek 3: Úryvek kódu z webové stránky.}
+
+\subsection*{Architektura}
+
+Snip\TeX{} se skládá ze dvou hlavních částí,
+La\TeX{}ového frontend balíčku a externí backend utility napsané v~Pythonu.
+Frontend definuje příkaz \textbackslash{}IncludeCode a zajišťuje sazbu výsledných úryvků pomocí balíčku Minted.
+Backend je zodpovědný za přístup ke zdrojovým souborům, vyhledávání označených úseků a jejich extrakci do dočasných souborů.
+Při překladu dokumentu frontend pomocí shell escape spustí backend utilitu,
+předá jí cestu ke zdrojovému souboru a název tagu,
+a následně vloží vygenerovaný dočasný soubor do dokumentu.
+
+\subsection*{Backend}
+
+Python balíček \textit{sniptex} je jednoduché command line rozhraní,
+které přijímá zdrojový soubor, název tagu a~cestu k výstupnímu souboru. 
+Rozhraní načte zdrojový soubor, vyhledá odpovídající dvojici značek
+\textit{sniptex-start} a~\textit{sniptex-end} a následně extrahuje text mezi nimi.
+
+Balíček také provádí kontrolu chybových stavů. Chybovým stavem je myšlen například
+neexistující zdrojový soubor, chybějící tag nebo vícenásobný výskyt stejného tagu ve zdrojovém souboru.
+V případě detekce chyby backend vyvolá výjimku, která přeruší překlad dokumentu
+a vypíše odpovídající chybovou zprávu.
+Pro práci s lokálními soubory balíček používá modul \textit{pathlib},
+pro vyhledávání tagů modul \textit{re}
+a pro načítání vzdálených souborů přes HTTP knihovnu \textit{requests}.
+
+\subsection*{Omezení}
+
+\begin{itemize}
+    \item Snip\TeX{} vyžaduje překladač LuaLaTeX.
+    
+    \item Při kompilaci dokumentu musí být povolen shell escape
+    pomocí přepínače \textit{--shell-escape}.
+
+    \item Python backend musí být nainstalovaný a dostupný v systémové proměnné PATH
+    pod příkazem \textit{sniptex}.
+
+    \item Balíček závisí na balíčku Minted.
+
+    \item Vzdálené zdrojové soubory musí být dostupné přes HTTP(S)
+    a ve formátu čitelného textového souboru.
+\end{itemize}
+
+\bibliographystyle{unsrt}
+\bibliography{docs/citace.bib}
+
+\end{document}
