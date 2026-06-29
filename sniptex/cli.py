@@ -1,4 +1,3 @@
-import os
 import sys
 import argparse
 from pathlib import Path
@@ -6,6 +5,18 @@ from pathlib import Path
 from sniptex import extractor
 from sniptex import fetcher
 from sniptex import validate
+
+def cleanup_generated_files(output_path: str) -> None:
+    snippet_path = Path(output_path)
+    meta_path = Path(str(snippet_path) + ".meta")
+
+    for path in (snippet_path, meta_path):
+        try:
+            path.unlink()
+        except FileNotFoundError:
+            pass
+        except OSError as exc:
+            raise RuntimeError(f"Error: Could not remove temporary file: {path}") from exc
 
 def main() -> int:
     parser = argparse.ArgumentParser(
@@ -22,17 +33,18 @@ def main() -> int:
 
         sniptex --source <url> --tag <tag>
             sniptex -s https://raw.githubusercontent.com/brozrost/sniptex/main/docs/example.py -t demo
+
+        sniptex --cleanup <generated file path>
+            sniptex --cleanup out/out.txt
         """
     )
 
     parser.add_argument(
         "-s", "--source", 
-        required=True, 
         help="Path to a local file or URL"
     )
     parser.add_argument(
         "-t", "--tag", 
-        required=True, 
         help="Snippet tag name."
     )
     parser.add_argument(
@@ -40,7 +52,26 @@ def main() -> int:
         help="Path to the output file. If omitted, prints to stdout."
     )
 
+    parser.add_argument(
+        "-c", "--cleanup",
+        metavar="FILE",
+        help="Remove a generated snippet file and its .meta file."
+    )
+
     args = parser.parse_args()
+
+    if args.cleanup:
+        try:
+            cleanup_generated_files(args.cleanup)
+        except RuntimeError as exc:
+            print(f"Error: {exc}", file=sys.stderr)
+            return 1
+        
+        return 0
+
+    if not args.source or not args.tag:
+        parser.error("Error: Arguments -s/--source and -t/--tag are required unless --cleanup is used.")
+
 
     try:
         if validate.is_url(args.source):
@@ -62,11 +93,10 @@ def main() -> int:
         return 1
 
     if args.out:
-        out_dir = "out"
-        os.makedirs(out_dir, exist_ok=True)
         output_path = Path(args.out)
-
+    
         try:
+            output_path.parent.mkdir(parents=True, exist_ok=True)
             output_path.write_text(snippet, encoding="utf-8")
 
             meta_path = Path(str(output_path) + ".meta")
@@ -80,5 +110,4 @@ def main() -> int:
     return 0
 
 if __name__ == "__main__":
-    import sys
     sys.exit(main())
