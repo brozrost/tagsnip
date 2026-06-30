@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Entrypoint for `python -m sniptex`
+Entrypoint for `python -m tagsnip`
 """
 from .cli import main
 

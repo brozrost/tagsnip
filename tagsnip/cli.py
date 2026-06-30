@@ -2,9 +2,9 @@ import sys
 import argparse
 from pathlib import Path
 
-from sniptex import extractor
-from sniptex import fetcher
-from sniptex import validate
+from tagsnip import extractor
+from tagsnip import fetcher
+from tagsnip import validate
 
 def cleanup_generated_files(output_path: str) -> None:
     snippet_path = Path(output_path)
@@ -20,22 +20,22 @@ def cleanup_generated_files(output_path: str) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="SnipTeX is a Python package for extracting tagged code snippets " \
+        description="tagsnip is a Python package for extracting tagged code snippets " \
         "from local files or remote sources.",
         usage="""
-        sniptex --help
+        tagsnip --help
 
-        sniptex --source <file path> --tag <tag>
-            sniptex -s example.py -t demo
+        tagsnip --source <file path> --tag <tag>
+            tagsnip -s example.py -t demo
 
-        sniptex --source <file path> --tag <tag> --out <out file path>
-            sniptex -s example.py -t demo -o out/out.txt
+        tagsnip --source <file path> --tag <tag> --out <out file path>
+            tagsnip -s example.py -t demo -o out/out.txt
 
-        sniptex --source <url> --tag <tag>
-            sniptex -s https://raw.githubusercontent.com/brozrost/sniptex/main/docs/example.py -t demo
+        tagsnip --source <url> --tag <tag>
+            tagsnip -s https://raw.githubusercontent.com/brozrost/tagsnip/main/docs/example.py -t demo
 
-        sniptex --cleanup <generated file path>
-            sniptex --cleanup out/out.txt
+        tagsnip --cleanup <generated file path>
+            tagsnip --cleanup out/out.txt
         """
     )
 
@@ -88,7 +88,7 @@ def main() -> int:
     except OSError:
         print(f"Error: Could not read file: {args.source}", file=sys.stderr)
         return 1
-    except extractor.SniptexError as exc:
+    except extractor.TagsnipError as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 1
 

@@ -1,16 +1,16 @@
-from sniptex import extractor
+from tagsnip import extractor
 
 PATH = "./docs/example.py"
 
 TEXT = """
-# sniptex-start demo
+# tagsnip-start demo
 def main():
     x = 1
     y = 2
     print(x + y)
 
     return 0
-# sniptex-end demo
+# tagsnip-end demo
 
 if __name__ == "__main__":
     import sys
@@ -34,49 +34,49 @@ def test_extract_from_file():
 def test_missing_start_tag():
     text = """
     hello
-    # sniptex-end 1
+    # tagsnip-end 1
     """
 
     try:
         extractor.extract_tagged_block(text, "1")
-        assert False, "Expected SniptexError"
-    except extractor.SniptexError as err:
+        assert False, "Expected TagsnipError"
+    except extractor.TagsnipError as err:
         assert str(err) == "Start tag not found for '1'"
 
 
 def test_missing_end_tag():
     text = """
-    # sniptex-start 1
+    # tagsnip-start 1
     hello
     """
 
     try:
         extractor.extract_tagged_block(text, "1")
-        assert False, "Expected SniptexError"
-    except extractor.SniptexError as err:
+        assert False, "Expected TagsnipError"
+    except extractor.TagsnipError as err:
         assert str(err) == "End tag not found for '1'"
 
 
 def test_multiple_start_tags():
     text = """
-    # sniptex-start 1
+    # tagsnip-start 1
     hello
-    # sniptex-start 1
+    # tagsnip-start 1
     world
-    # sniptex-end 1
+    # tagsnip-end 1
     """
 
     try:
         extractor.extract_tagged_block(text, "1")
-        assert False, "Expected SniptexError"
-    except extractor.SniptexError as err:
+        assert False, "Expected TagsnipError"
+    except extractor.TagsnipError as err:
         assert str(err) == "Multiple start tags found for '1'"
 
 def test_missing_file():
     try:
         extractor.extract_from_file("./does_not_exist.py", "1")
-        assert False, "Expected SniptexError"
-    except extractor.SniptexError:
+        assert False, "Expected TagsnipError"
+    except extractor.TagsnipError:
         pass
 
 def main():

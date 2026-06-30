@@ -1,4 +1,4 @@
-from sniptex import fetcher
+from tagsnip import fetcher
 
-URL = "https://raw.githubusercontent.com/brozrost/sniptex/refs/heads/main/docs/example.py"
+URL = "https://raw.githubusercontent.com/brozrost/tagsnip/refs/heads/main/docs/example.py"
 

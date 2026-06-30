@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "sniptex"
-version = "1.1.0"
+name = "tagsnip"
+version = "1.0.0"
 description = "Python package for extracting tagged code snippets from local files or remote sources."
 readme = "README-pypi.md"
 requires-python = ">=3.10"
@@ -15,11 +15,11 @@ authors = [
 license = "MIT"
 
 [project.urls]
-Homepage = "https://github.com/brozrost/sniptex"
-Repository = "https://github.com/brozrost/sniptex"
+Homepage = "https://github.com/brozrost/tagsnip"
+Repository = "https://github.com/brozrost/tagsnip"
 
 [tool.setuptools]
-packages = ["sniptex"]
+packages = ["tagsnip"]
 
 [project.scripts]
-sniptex = "sniptex.cli:main"
+tagsnip = "tagsnip.cli:main"
