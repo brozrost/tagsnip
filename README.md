@@ -31,7 +31,7 @@ Both parts are required.
 
 ### Installing the LaTeX package from CTAN
 
-Download the <a href="">`tagsnip` package archive from CTAN</a> and extract it. For a local project installation, copy `tagsnip.sty` next to your main `.tex` file:
+Download the <a href="https://ctan.org/pkg/tagsnip">`tagsnip` package archive from CTAN</a> and extract it. For a local project installation, copy `tagsnip.sty` next to your main `.tex` file:
 
 ```sh
 project/
@@ -41,7 +41,7 @@ project/
 
 This is the simplest installation method and is sufficient for compiling a single project. For a user-wide installation, place `tagsnip.sty` into your local TeX tree.
 
-Also see: ctan url
+Also see: https://ctan.org/pkg/tagsnip
 
 ### Installing the Python backend
 
