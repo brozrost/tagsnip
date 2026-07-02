@@ -62,7 +62,7 @@ lualatex --shell-escape docs/docs.tex
 
 \section*{tagsnip}
 
-\textit{tagsnip} is a La\TeX{} package for including tagged code snippets from local files or remote URLs. 
+\textit{tagsnip} is a \LaTeX{} package for including tagged code snippets from local files or remote URLs. 
 It extracts marked sections of code and typesets them in a consistent style, 
 supporting reproducible and maintainable documentation.
 
@@ -135,7 +135,7 @@ The result of this command is Snippet 3:
 
 \subsection*{Architecture}
 
-\textit{tagsnip} consists of two main parts: a La\TeX{} frontend package and an external backend utility written in Python. 
+\textit{tagsnip} consists of two main parts: a \LaTeX{} frontend package and an external backend utility written in Python. 
 The frontend defines the command \textbackslash{}IncludeCode and handles the typesetting of the resulting snippets 
 using the Minted package. The backend is responsible for accessing source files, finding marked sections, 
 and extracting them into temporary files. During document compilation, the frontend uses shell escape 
@@ -158,7 +158,7 @@ and for loading remote files over HTTP, it uses the \textit{requests} library.
 \subsection*{Limitations}
 
 \begin{itemize}
-    \item \textit{tagsnip} requires the LuaLa\TeX{} compiler.
+    \item \textit{tagsnip} requires the Lua\LaTeX{} compiler.
     
     \item During document compilation, 
     shell escape must be enabled using the \textit{--shell-escape} option.
